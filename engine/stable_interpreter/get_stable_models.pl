@@ -58,9 +58,12 @@ get_stable_models(SmRules, Mode, Models, MaxModels) :-
     write(S, '( echo ""; '),
     echo_rules_command(SmRules, Mode, S),
     (Mode = stable_strong ->
-    	format(S, ' ) | lparse --true-negation | smodels ~w | stable_interpreter/postsmod', [MaxModels])
+     %% using clingo now
+     %% -n indicates the number of models
+     %% -V0 adjusts the output to a minimum (the format expected by bash script postsmod.sh)
+     format(S, ' ) | clingo -n ~w -V0 | stable_interpreter/postsmod.sh', [MaxModels])
     ;
-    	format(S, ' ) | lparse | smodels ~w | stable_interpreter/postsmod', [MaxModels])
+     format(S, ' ) | clingo -n ~w -V0 | stable_interpreter/postsmod.sh', [MaxModels])
     ),
     close(S),
     memory_file_to_atom(MemHandle, Command),
@@ -75,10 +78,9 @@ get_stable_models(SmRules, Mode, Models, MaxModels) :-
 
 
 get_models(S, [Model|ModelsRest]) :-
-    read(S, model(Model)),
-    !,
-    get_models(S, ModelsRest).
-
+	read(S, model(Model)),
+	!,
+	get_models(S, ModelsRest).
 get_models(_, []).
 
 
