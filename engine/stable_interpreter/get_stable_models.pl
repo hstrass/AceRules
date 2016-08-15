@@ -37,8 +37,8 @@ program, writing some input for the program, and reading its output). I did it n
 open(pipe('(echo "inputline1"; echo "inputline2"; echo "and so on") | program'), read, S)
 ==
 
-@author Tobias Kuhn
-@version 2007-02-09
+@author Tobias Kuhn, adaptations to clingo by Hannes Strass
+@version 2016-08-12
 
 @see stable_interpreter.pl
 */
