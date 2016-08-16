@@ -2,7 +2,7 @@
 
 # See README.txt for documentation
 
-mode=court
+mode=stable_strong
 output=normal
 
 if [ "$1" = "--stable" ]; then
